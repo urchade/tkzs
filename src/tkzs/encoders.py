@@ -155,13 +155,13 @@ class WordEncoder(object):
         return [self.tokenizer(x) for x in doc]
     
     def encode(self, x):
-        """Encode sentence to list of ids
+        """Encode a sequence to list of ids
 
         Args:
-            x ([type]): [description]
+            x (str): sequence
 
         Returns:
-            [type]: [description]
+            list[int]
         """
         x = self.check_type(x)
         y = []
