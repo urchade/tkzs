@@ -1,6 +1,7 @@
 import spacy
 import torch
 import re
+import string
 from torch.nn.utils.rnn import pad_sequence
 from collections import defaultdict
 
@@ -103,7 +104,7 @@ def re_tokenizer(txt):
     
 class WordEncoder(object):
     
-    def __init__(self, tokenizer=lambda x: x.split(), special_tokens=["[PAD]", "[UNK]"]):
+    def __init__(self, tokenizer=re_tokenizer, special_tokens=["[PAD]", "[UNK]"]):
         
         self.tokenizer = tokenizer
         
@@ -132,7 +133,6 @@ class WordEncoder(object):
         
     def tokenize(self, x):
         """Tokenize a sequence"""
-        
         return self.tokenizer(x)
     
     def batch_tokenize(self, doc):
@@ -140,7 +140,6 @@ class WordEncoder(object):
     
     def encode(self, x):
         """encode sentence to list of ids"""
-        
         x = self.check_type(x)
         y = []
         for t in x:
@@ -149,7 +148,6 @@ class WordEncoder(object):
             except KeyError:
                 idx = 1
             y.append(idx)
-            
         return y
     
     def encode_batch(self, doc, paddind_idx=0):
@@ -164,7 +162,6 @@ class WordEncoder(object):
     
     def check_type(self, x):
         """if word already splitted, no need tokenization"""
-        
         if isinstance(x, str):
             return self.tokenizer(x)
         elif isinstance(x, list):
@@ -173,5 +170,4 @@ class WordEncoder(object):
             raise ValueError
             
     def __repr__(self):
-        
         return f"tokenizer containing {len(self.vocabulary)} tokens"
