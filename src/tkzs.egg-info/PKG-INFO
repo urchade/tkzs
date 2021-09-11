@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: tkzs
-Version: 0.0.4
+Version: 0.0.5
 Summary: Some utils for tokenization in pytorch
 Home-page: https://github.com/urchade/tkzs
 Author: Urchade Zaratiana
@@ -13,11 +13,13 @@ License-File: LICENSE.txt
 # tkzs
 
 ## Installation
+
 ```bash
 pip install tkzs
 ```
 
 ## Use a simple tokenizer
+
 ```python
 from tkzs.tokenizers import re_tokenizer
 
@@ -27,6 +29,7 @@ re_tokenizer(txt)
 ```
 
 ## Use a spacy word tokenizer
+
 ```python
 from tkzs.tokenizers import SpacyTokenizer
 
@@ -38,6 +41,7 @@ tokenizer.tokenize(txt)
 ```
 
 ## Use a word encoder
+
 ```python
 from tkzs.encoders import WordEncoder
 from tkzs.tokenizers import re_tokenizer
@@ -56,4 +60,5 @@ encoder.batch_tokenize(docs) # return a list of tokenized sequence
 
 encoder.encode_batch(docs) # return a tensor of size [batch_size, max_length]
 ```
+
 

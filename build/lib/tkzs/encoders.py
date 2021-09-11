@@ -44,12 +44,14 @@ class ByteEncoder(object):
         """
         return [self.encode_token(token) for token in sequence]
     
-    def encode_batch(self, batch, word_length=None, char_padding='right'):
+    def encode_batch(self, batch, word_length=None, char_padding='right', tokenizer=None):
         """encode a batch of tokenized sequence
 
         Args:
-            batch (list[list[str]]): batch of tokenized sequence
+            batch (list[list[str]] or list[str]): batch of tokenized sequence
             word_length ([type], optional): [description]. Defaults to None.
+            tokenizer (callable, optional): Provide a tokenizer if the sequences are not 
+                                            tokenized. Defaults to None.
 
         Returns:
             torch.LongTensor: contains the encoded (padded) batches [B, num_words, num_chars]
@@ -59,6 +61,8 @@ class ByteEncoder(object):
         batch_tokens = []
         
         for seq in batch:
+            if tokenizer is not None:
+                seq = tokenizer(seq)
             batch_tokens.extend(self.encode_sequence(seq))
             lengths.append(len(seq))
         

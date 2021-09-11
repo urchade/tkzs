@@ -1,11 +1,13 @@
 # tkzs
 
 ## Installation
+
 ```bash
 pip install tkzs
 ```
 
 ## Use a simple tokenizer
+
 ```python
 from tkzs.tokenizers import re_tokenizer
 
@@ -15,6 +17,7 @@ re_tokenizer(txt)
 ```
 
 ## Use a spacy word tokenizer
+
 ```python
 from tkzs.tokenizers import SpacyTokenizer
 
@@ -26,6 +29,7 @@ tokenizer.tokenize(txt)
 ```
 
 ## Use a word encoder
+
 ```python
 from tkzs.encoders import WordEncoder
 from tkzs.tokenizers import re_tokenizer
