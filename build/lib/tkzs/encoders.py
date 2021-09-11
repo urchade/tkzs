@@ -3,6 +3,19 @@ import torch
 from torch.nn.utils.rnn import pad_sequence
 import torch.nn.functional as F
 
+def pad_middle(b, max_len):
+    
+    b = b[:max_len]
+    
+    len_b = len(b)
+    
+    pad_left = (max_len - len_b)//2
+    
+    if (len_b + max_len) % 2 == 0:
+        return F.pad(b, (pad_left, pad_left))
+    else:
+        return F.pad(b, (pad_left + 1, pad_left))
+
 class ByteEncoder(object):
     
     def __init__(self):
@@ -31,11 +44,12 @@ class ByteEncoder(object):
         """
         return [self.encode_token(token) for token in sequence]
     
-    def encode_batch(self, batch):
+    def encode_batch(self, batch, word_length=None, char_padding='right'):
         """encode a batch of tokenized sequence
 
         Args:
             batch (list[list[str]]): batch of tokenized sequence
+            word_length ([type], optional): [description]. Defaults to None.
 
         Returns:
             torch.LongTensor: contains the encoded (padded) batches [B, num_words, num_chars]
@@ -47,49 +61,22 @@ class ByteEncoder(object):
         for seq in batch:
             batch_tokens.extend(self.encode_sequence(seq))
             lengths.append(len(seq))
-            
-        batch_tokens = pad_sequence(batch_tokens, batch_first=True)
-            
-        list_seq = torch.split(batch_tokens, lengths)
-            
-        return pad_sequence(list_seq, batch_first=True)
-    
-    def encode_batch_with_length(self, batch, length=15):
-        """encode a batch of tokenized sequence given a max char length
-
-        Args:
-            batch (list[list[str]]): batch of tokenized sequence
-            length (int, optional): Max char length. Defaults to 15.
-
-        Returns:
-            torch.LongTensor: contains the encoded (padded) batches [B, num_words, length]
-        """
         
-        lengths = []
-        batch_tokens = []
-        
-        for seq in batch:
-            batch_tokens.extend(self.encode_sequence(seq))
-            lengths.append(len(seq))
-        
-        batch_tokens = torch.stack([self.pad_middle(i, length) for i in batch_tokens], dim=0)
-        
-        list_seq = torch.split(batch_tokens, lengths)
-        
-        return pad_sequence(list_seq, batch_first=True)
-    
-    def pad_middle(self, b, max_len):
-        
-        b = b[:max_len]
-        
-        len_b = len(b)
-        
-        pad_left = (max_len - len_b)//2
-        
-        if (len_b + max_len) % 2 == 0:
-            return F.pad(b, (pad_left, pad_left))
+        if char_padding=='right':
+            batch_tokens = pad_sequence(batch_tokens, batch_first=True)
+            if word_length is None:
+                batch_tokens = batch_tokens
+            else:
+                batch_tokens = batch_tokens[:, :word_length]
+        elif char_padding=='center':
+            if word_length is None:
+                word_length = max([len(b) for b in batch_tokens])
+            batch_tokens = torch.stack([pad_middle(i, word_length) for i in batch_tokens], dim=0)
         else:
-            return F.pad(b, (pad_left + 1, pad_left))
+            raise ValueError
+        list_seq = torch.split(batch_tokens, lengths)
+            
+        return pad_sequence(list_seq, batch_first=True)
 
 
 class WordEncoder(object):

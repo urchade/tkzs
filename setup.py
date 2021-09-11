@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='tkzs',
-    version='0.0.3',
+    version='0.0.4',
     author='Urchade Zaratiana',
     author_email='urchade.zaratiana@gmail.com',
     packages=['tkzs'],
