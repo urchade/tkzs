@@ -48,3 +48,22 @@ encoder.batch_tokenize(docs) # return a list of tokenized sequence
 
 encoder.encode_batch(docs) # return a tensor of size [batch_size, max_length]
 ```
+
+## Use a byte encoder
+
+```python
+from tkzs.encoders import ByteEncoder
+from tkzs.tokenizers import re_tokenizer
+
+docs = [
+    "Contrastive Fine-tuning Improves Robustness for Neural Rankers",
+    "Unsupervised Neural Machine Translation for Low-Resource Domains via Meta-Learning",
+    "Spatial Dependency Parsing for Semi-Structured Document Information Extraction"
+    ]
+
+encoder = ByteEncoder()
+
+# return a tensor of shape [Batch, Word, Char]
+encoder.encode_batch(docs, char_padding='center', word_length=None, tokenizer=re_tokenizer)
+
+```
