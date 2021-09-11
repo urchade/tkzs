@@ -7,7 +7,7 @@ class SpacyTokenizer(object):
     
     def __init__(self, name='en_core_web_sm'):
         
-        self.spacy_model = spacy.load(name='en_core_web_sm', disable=['parser', 'ner'])
+        self.spacy_model = spacy.load(name=name, disable=['parser', 'ner'])
         
     def tokenize(self, sent):
         
