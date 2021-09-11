@@ -1,0 +1,9 @@
+LICENSE.txt
+README.md
+setup.py
+src/tkzs/encoders.py
+src/tkzs/tokenizers.py
+src/tkzs.egg-info/PKG-INFO
+src/tkzs.egg-info/SOURCES.txt
+src/tkzs.egg-info/dependency_links.txt
+src/tkzs.egg-info/top_level.txt

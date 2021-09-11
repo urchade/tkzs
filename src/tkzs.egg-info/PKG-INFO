@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: tkzs
+Version: 0.0.1
+Summary: Some utils for tokenization in pytorch
+Home-page: https://github.com/urchade/tkzs
+Author: Urchade Zaratiana
+Author-email: urchade.zaratiana@gmail.com
+License: LICENSE.txt
+Platform: UNKNOWN
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+
+# tkzs
+
+
