@@ -32,7 +32,4 @@ def re_tokenizer(txt, lowercase=True):
     if lowercase:
         t = t.lower()
 
-    t = re.sub(r'([%s])' % re.escape(string.punctuation), r' \1 ', t)
-    t = re.sub(r'\\.', r' ', t)
-    t = re.sub(r'\s+', r' ', t)
-    return t.split()
+    return re.findall(r"[\w]+|[^\s\w]", t)

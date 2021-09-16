@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: tkzs
-Version: 0.0.6
+Version: 0.0.7
 Summary: Some utils for tokenization in pytorch
 Home-page: https://github.com/urchade/tkzs
 Author: Urchade Zaratiana
